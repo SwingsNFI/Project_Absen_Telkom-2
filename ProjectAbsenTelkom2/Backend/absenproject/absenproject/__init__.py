@@ -1,0 +1,1 @@
+# ini adalah init file
