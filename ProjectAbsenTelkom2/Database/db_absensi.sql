@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2020 at 09:20 PM
+-- Generation Time: Mar 12, 2020 at 03:57 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -43,6 +43,7 @@ CREATE TABLE `tbl_absen` (
 
 CREATE TABLE `tbl_absensi_ami` (
   `id_absensi_ami` int(10) UNSIGNED NOT NULL,
+  `id_jampel` int(2) UNSIGNED NOT NULL,
   `id_acara` varchar(10) NOT NULL,
   `id_siswa` varchar(10) NOT NULL,
   `kehadiran` tinyint(1) NOT NULL,
@@ -85,6 +86,18 @@ CREATE TABLE `tbl_guru` (
   `nama_guru` varchar(50) NOT NULL,
   `email_guru` varchar(40) NOT NULL,
   `password_guru` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_jampel`
+--
+
+CREATE TABLE `tbl_jampel` (
+  `id_jampel` int(2) UNSIGNED NOT NULL,
+  `nama_jampel` varchar(5) NOT NULL,
+  `waktu_jampel` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -849,7 +862,8 @@ ALTER TABLE `tbl_absen`
 ALTER TABLE `tbl_absensi_ami`
   ADD PRIMARY KEY (`id_absensi_ami`),
   ADD KEY `id_acara` (`id_acara`),
-  ADD KEY `id_siswa` (`id_siswa`);
+  ADD KEY `id_siswa` (`id_siswa`),
+  ADD KEY `id_jampel` (`id_jampel`);
 
 --
 -- Indexes for table `tbl_acara`
@@ -870,6 +884,12 @@ ALTER TABLE `tbl_akses`
 ALTER TABLE `tbl_guru`
   ADD PRIMARY KEY (`id_guru`),
   ADD KEY `id_akses` (`id_akses`);
+
+--
+-- Indexes for table `tbl_jampel`
+--
+ALTER TABLE `tbl_jampel`
+  ADD PRIMARY KEY (`id_jampel`);
 
 --
 -- Indexes for table `tbl_kategori`
@@ -922,6 +942,12 @@ ALTER TABLE `tbl_absensi_ami`
   MODIFY `id_absensi_ami` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_jampel`
+--
+ALTER TABLE `tbl_jampel`
+  MODIFY `id_jampel` int(2) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tbl_validasi`
 --
 ALTER TABLE `tbl_validasi`
@@ -943,7 +969,8 @@ ALTER TABLE `tbl_absen`
 --
 ALTER TABLE `tbl_absensi_ami`
   ADD CONSTRAINT `tbl_absensi_ami_ibfk_1` FOREIGN KEY (`id_acara`) REFERENCES `tbl_acara` (`id_acara`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_absensi_ami_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_absensi_ami_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id_siswa`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_absensi_ami_ibfk_3` FOREIGN KEY (`id_jampel`) REFERENCES `tbl_jampel` (`id_jampel`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_acara`
